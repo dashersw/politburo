@@ -1,0 +1,22 @@
+{
+  "name": "politburo",
+  "version": "0.0.1",
+  "description": "A micro library for building applications with Vieux architecture",
+  "main": "dist/politburo.js",
+  "devDependencies": {
+    "babel-core": "^5.8.22",
+    "babel-loader": "^5.3.2",
+    "eventemitter2": "^0.4.14",
+    "webpack": "^1.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dashersw/politburo.git"
+  },
+  "author": "Armagan Amcalar <armagan@amcalar.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dashersw/politburo/issues"
+  },
+  "homepage": "https://github.com/dashersw/politburo"
+}
