@@ -41,12 +41,13 @@ export default class Culture {
     render(opt_base, opt_index) {
         if (opt_base) {
             this.element = CultureMinistry.createElement(this.toString());
+            this.element.id = this.id;
             opt_base.insertBefore(this.element, opt_base.childNodes[opt_index] || null);
         }
     }
 
     templates_base() {
-        return `<div id="${this.id}"></div>`;
+        return `<div></div>`;
     }
 
     dispose() {
