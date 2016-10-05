@@ -46,7 +46,7 @@ export default class Culture {
         }
     }
 
-    templates_base() {
+    template() {
         return `<div></div>`;
     }
 
