@@ -158,13 +158,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function render(opt_base, opt_index) {
 	            if (opt_base) {
 	                this.element = CultureMinistry.createElement(this.toString());
+	                this.element.id = this.id;
 	                opt_base.insertBefore(this.element, opt_base.childNodes[opt_index] || null);
 	            }
 	        }
 	    }, {
 	        key: 'templates_base',
 	        value: function templates_base() {
-	            return '<div id="' + this.id + '"></div>';
+	            return '<div></div>';
 	        }
 	    }, {
 	        key: 'dispose',
