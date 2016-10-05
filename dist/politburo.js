@@ -163,8 +163,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        }
 	    }, {
-	        key: 'templates_base',
-	        value: function templates_base() {
+	        key: 'template',
+	        value: function template() {
 	            return '<div></div>';
 	        }
 	    }, {
