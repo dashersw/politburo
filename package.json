@@ -1,6 +1,6 @@
 {
   "name": "politburo",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A micro library for building applications with Vieux architecture",
   "main": "dist/politburo.js",
   "private": true,
