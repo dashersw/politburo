@@ -17,7 +17,7 @@ export default class Culture {
     }
 
     toString() {
-        return this.templates_base();
+        return this.template();
     }
 
     $$(selector) {
