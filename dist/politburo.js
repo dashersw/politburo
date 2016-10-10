@@ -129,7 +129,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(Culture, [{
 	        key: 'toString',
 	        value: function toString() {
-	            return this.templates_base();
+	            return this.template();
 	        }
 	    }, {
 	        key: '$$',
@@ -208,7 +208,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	var cultsRegistry = {};
 	
-	var events = ['click', 'mouseover', 'mouseout', 'mousemove', 'mousedown', 'mouseup', 'scroll', 'keyup', 'keypress', 'focus', 'touchstart', 'touchmove', 'touchend'];
+	var events = ['click', 'mouseover', 'mouseout', 'mousemove', 'mousedown', 'mouseup', 'scroll', 'keyup', 'keypress', 'focus', 'touchstart', 'touchmove', 'touchend', 'tap', 'doubletap', 'press', 'pan', 'swipe'];
 	
 	document.addEventListener('DOMContentLoaded', function () {
 	    events.forEach(function (type) {
