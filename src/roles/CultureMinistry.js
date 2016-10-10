@@ -13,7 +13,12 @@ var events = [
     'focus',
     'touchstart',
     'touchmove',
-    'touchend'
+    'touchend',
+    'tap',
+    'doubletap',
+    'press',
+    'pan',
+    'swipe'
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
