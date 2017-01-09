@@ -1,7 +1,18 @@
-var CultureMinistry = require('./CultureMinistry.js');
+import CultureMinistry from './CultureMinistry';
 
 export default class Culture {
+    /**
+     * Culture is a role that determines your user interface. It defines what
+     * your users see on the page. Culture includes a lot of predefined
+     * behaviors, like what happens when a user clicks on a button. Cultures
+     * are extremely dummy, in that they have no memory, or state, of their
+     * own. They know how to draw a user interface and how to handle user
+     * input; which they delegate to the Representatives.
+     */
     constructor() {
+        this.id_ = null;
+        this.element = null;
+
         CultureMinistry.setCulture(this);
     }
 
@@ -10,7 +21,7 @@ export default class Culture {
     }
 
     get el() {
-        var rv = this.element;
+        let rv = this.element;
         if (!rv) rv = this.element = document.getElementById(this.id);
 
         return rv;
@@ -21,7 +32,7 @@ export default class Culture {
     }
 
     $$(selector) {
-        var rv = null, el = this.el;
+        let rv = null, el = this.el;
 
         if (el) rv = el.querySelectorAll(selector);
 
@@ -31,7 +42,7 @@ export default class Culture {
     }
 
     $(selector) {
-        var rv = null, el = this.el;
+        let rv = null, el = this.el;
 
         if (el) rv = selector == undefined ? el : el.querySelector(selector);
 
@@ -56,4 +67,4 @@ export default class Culture {
         this.element = null;
         this.id_ = null;
     }
-};
+}
