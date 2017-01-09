@@ -1,6 +1,6 @@
-var cultsRegistry = {};
+const cultsRegistry = {};
 
-var events = [
+const events = [
     'click',
     'mouseover',
     'mouseout',
@@ -25,14 +25,17 @@ document.addEventListener('DOMContentLoaded', () => {
     events.forEach(type => document.body.addEventListener(type, handleEvent));
 });
 
-var getUid = (() => {
-    var counter = Math.floor(Math.random() * 2147483648);
+/**
+ * @return {function():string}
+ */
+const getUid = (() => {
+    let counter = Math.floor(Math.random() * 2147483648);
 
     return () => (counter++).toString(36);
 })();
 
-var createElement = (() => {
-    var tempDiv = document.createElement('div');
+const createElement = (() => {
+    const tempDiv = document.createElement('div');
 
     return (htmlString) => {
         tempDiv.innerHTML = htmlString.trim();
@@ -41,7 +44,7 @@ var createElement = (() => {
 })();
 
 function getParentCults(child) {
-    var node = child, parentCults = [], cult, ids;
+    let node = child, parentCults = [], cult, ids;
 
     if (ids = node.getAttribute && node.getAttribute('data-cult')) {
         ids.split(',').forEach(id => parentCults.push(cultsRegistry[id]));
@@ -63,7 +66,7 @@ function getParentCults(child) {
 }
 
 function handleEvent(e) {
-    var cults = getParentCults(e.target),
+    let cults = getParentCults(e.target),
         target = e.target,
         broken = false;
 
@@ -81,15 +84,15 @@ function handleEvent(e) {
  * event handler defined in the component.
  */
 function callHandlers(cults, e) {
-    var broken = false;
+    let broken = false;
 
-    for (var i = 0; i < cults.length; i++) {
-        var cult = cults[i];
-        var handlers = cult && cult.events && cult.events[e.type];
+    for (let i = 0; i < cults.length; i++) {
+        let cult = cults[i];
+        let handlers = cult && cult.events && cult.events[e.type];
 
         if (!handlers) continue;
 
-        var selectors = Object.keys(handlers);
+        let selectors = Object.keys(handlers);
 
         if (callHandler(cult, e, handlers, selectors) === false) {
             broken = true;
@@ -101,11 +104,11 @@ function callHandlers(cults, e) {
 }
 
 function callHandler(cult, e, handlers, selectors) {
-    var rv = true;
+    let rv = true;
 
     selectors.forEach(selector => {
         if (matchesSelector(e.lastTarget, selector)) {
-            var targetCulture = getCulture(e.lastTarget.id);
+            let targetCulture = getCulture(e.lastTarget.id);
 
             rv = handlers[selector].call(cult, e, targetCulture);
         }
@@ -133,9 +136,12 @@ function removeCulture(cult) {
 }
 
 export default {
-    getUid,
-    getCulture,
-    setCulture,
-    removeCulture,
-    createElement
+    getUid: getUid,
+    getCulture: getCulture,
+    getComponent: getCulture,
+    setCulture: setCulture,
+    setComponent: setCulture,
+    removeCulture: removeCulture,
+    removeComponent: removeCulture,
+    createElement: createElement
 }
