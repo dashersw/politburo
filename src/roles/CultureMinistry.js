@@ -35,7 +35,7 @@ var createElement = (() => {
     var tempDiv = document.createElement('div');
 
     return (htmlString) => {
-        tempDiv.innerHTML = htmlString;
+        tempDiv.innerHTML = htmlString.trim();
         return tempDiv.removeChild(tempDiv.firstChild);
     };
 })();
