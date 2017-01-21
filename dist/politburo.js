@@ -228,7 +228,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var tempDiv = document.createElement('div');
 	
 	    return function (htmlString) {
-	        tempDiv.innerHTML = htmlString;
+	        tempDiv.innerHTML = htmlString.trim();
 	        return tempDiv.removeChild(tempDiv.firstChild);
 	    };
 	})();
