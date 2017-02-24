@@ -1,7 +1,7 @@
-import EventEmitter from 'lib/eventemitter2'
+import EventEmitter from '../lib/eventemitter2'
 
 /**
- * @extends {EventEmitter$$module$lib$eventemitter2}
+ * @extends {EventEmitter}
  */
 export default class Representative extends EventEmitter {
     constructor() {

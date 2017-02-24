@@ -1,13 +1,13 @@
-/**
- * @param {Function} fn
- */
-var define = function(fn) {
+// /**
+//  * @param {Function} fn
+//  */
+// var define = function(fn) {
 
-};
+// };
 
-define.amd = function() {
+// define.amd = function() {
 
-};
+// };
 
-var exports = {};
+// var exports = {};
 

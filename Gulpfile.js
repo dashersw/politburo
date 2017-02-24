@@ -67,7 +67,7 @@ gulp.task('default', function() {
     var closureCompiler = require('google-closure-compiler').gulp();
     var sourcemaps = require('gulp-sourcemaps');
 
-    return gulp.src(['./src/**/*.js'], {base: './'})
+    return gulp.src(['./src/**/*.js'])
                .pipe(sourcemaps.init())
                .pipe(closureCompiler({
                    compilation_level: 'ADVANCED_OPTIMIZATIONS',
@@ -75,31 +75,32 @@ gulp.task('default', function() {
                    language_in: 'ECMASCRIPT6_TYPED',
                    // assume_function_wrapper: true,
                    externs: [
-                       'externs/amd.js'
+                    //    'externs/amd.js'
                    ],
                    language_out: 'ECMASCRIPT5_STRICT',
                    output_module_dependencies: 'dependencies.json',
                    // preserve_type_annotations: true,
                    summary_detail_level: 3,
-                   // new_type_inf: true,
+                //    new_type_inf: true,
                    // tracer_mode: 'ALL',
-                   use_types_for_optimization: true,
+                //    use_types_for_optimization: true,
                    dependency_mode: 'STRICT',
-                   process_common_js_modules: true,
+                //    process_common_js_modules: true,
                    formatting: ['PRETTY_PRINT'/*, 'PRINT_INPUT_DELIMITER'*/],
-                   js_module_root: ['/src'],
+                //    js_module_root: ['/src'],
                    jscomp_error: '*',
-                   jscomp_warning: ['lintChecks'],
-                   jscomp_off: ['extraRequire', 'inferredConstCheck'],
+                //    jscomp_warning: ['lintChecks'],
+                   jscomp_off: ['lintChecks'],
                    hide_warnings_for: '[synthetic',
-                   entry_point: 'politburo',
+                   entry_point: '/src/politburo',
                    generate_exports: true,
                    export_local_property_definitions: true,
                    // output_manifest: 'manifest.txt',
                    // variable_renaming_report: 'variable_map.txt',
                    // property_renaming_report: 'property_map.txt',
-                   output_wrapper: `(function(){\n%output%\n
-                   
+/*
+
+
 var politburo = this.politburo;
 if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
@@ -114,11 +115,15 @@ else {
     // Browser global.
     window.politburo = politburo;
 }
-}).call({});`,
+
+*/
+//                    output_wrapper: `(function(){\n%output%\n
+
+// }).call({});`,
                    js_output_file: 'script.js'
                }))
                .pipe(sourcemaps.write('/')) // gulp-sourcemaps automatically adds the sourcemap url comment
-               .pipe(gulp.dest('./dist/js'));
+               .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('bundle', function(callback) {

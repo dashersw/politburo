@@ -1,3 +1,5 @@
+import getUid from '../lib/uid';
+
 const cultsRegistry = {};
 
 const events = [
@@ -25,15 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     events.forEach(type => document.body.addEventListener(type, handleEvent));
 });
 
-/**
- * @return {function():string}
- */
-const getUid = (() => {
-    let counter = Math.floor(Math.random() * 2147483648);
-
-    return () => (counter++).toString(36);
-})();
-
 const createElement = (() => {
     const tempDiv = document.createElement('div');
 
@@ -43,7 +36,7 @@ const createElement = (() => {
     };
 })();
 
-function getParentCults(child) {
+const getParentCults = child => {
     let node = child, parentCults = [], cult, ids;
 
     if (ids = node.getAttribute && node.getAttribute('data-cult')) {
@@ -65,7 +58,7 @@ function getParentCults(child) {
     return parentCults;
 }
 
-function handleEvent(e) {
+const handleEvent = e => {
     let cults = getParentCults(e.target),
         target = e.target,
         broken = false;
@@ -83,7 +76,7 @@ function handleEvent(e) {
  * Given a list of cultsRegistry, checks whether any component would respond to the given event and if so, executes the
  * event handler defined in the component.
  */
-function callHandlers(cults, e) {
+const callHandlers = (cults, e) => {
     let broken = false;
 
     for (let i = 0; i < cults.length; i++) {
@@ -103,11 +96,11 @@ function callHandlers(cults, e) {
     return broken;
 }
 
-function callHandler(cult, e, handlers, selectors) {
+const callHandler = (cult, e, handlers, selectors) => {
     let rv = true;
 
     selectors.forEach(selector => {
-        if (matchesSelector(e.lastTarget, selector)) {
+        if (e.lastTarget.matches(selector)) {
             let targetCulture = getCulture(e.lastTarget.id);
 
             rv = handlers[selector].call(cult, e, targetCulture);
@@ -117,21 +110,15 @@ function callHandler(cult, e, handlers, selectors) {
     return rv;
 }
 
-function matchesSelector(el, selector) {
-    return [].indexOf.call(document.querySelectorAll(selector), el) >= 0;
-}
-
-function getCulture(id) {
+const getCulture = id => {
     return cultsRegistry[id];
 }
 
-function setCulture(cult) {
-    cult.id_ = getUid();
-
+const setCulture = cult => {
     cultsRegistry[cult.id] = cult;
 }
 
-function removeCulture(cult) {
+const removeCulture = cult => {
     delete cultsRegistry[cult.id];
 }
 

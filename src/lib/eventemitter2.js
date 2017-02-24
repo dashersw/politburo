@@ -11,9 +11,6 @@
   };
   var defaultMaxListeners = 10;
 
-  /**
-   * @this {EventEmitter}
-   */
   function init() {
     this._events = {};
     if (this._conf) {
@@ -21,9 +18,6 @@
     }
   }
 
-  /**
-   * @this {EventEmitter}
-   */
   function configure(conf) {
     if (conf) {
       this._conf = conf;
@@ -31,7 +25,7 @@
       conf.delimiter && (this.delimiter = conf.delimiter);
       this._events.maxListeners = conf.maxListeners !== undefined ? conf.maxListeners : defaultMaxListeners;
       conf.wildcard && (this.wildcard = conf.wildcard);
-      conf.newListener && (this._events.newListener = conf.newListener);
+      conf.newListener && (this.newListener = conf.newListener);
       conf.verboseMemoryLeak && (this.verboseMemoryLeak = conf.verboseMemoryLeak);
 
       if (this.wildcard) {
@@ -42,9 +36,6 @@
     }
   }
 
-  /**
-   * @this {EventEmitter}
-   */
   function logPossibleMemoryLeak(count, eventName) {
     var errorMsg = '(node) warning: possible EventEmitter memory ' +
         'leak detected. %d listeners added. ' +
@@ -62,10 +53,7 @@
     }
   }
 
-  /**
-   * @constructor
-   */
-  export default function EventEmitter(conf) {
+  function EventEmitter(conf) {
     this._events = {};
     this.newListener = false;
     this.verboseMemoryLeak = false;
@@ -184,9 +172,6 @@
     return listeners;
   }
 
-  /**
-   * @this {EventEmitter}
-   */
   function growListenerTree(type, listener) {
 
     type = typeof type === 'string' ? type.split(this.delimiter) : type.slice();
@@ -246,14 +231,8 @@
   // Obviously not all Emitters should be limited to 10. This function allows
   // that to be increased. Set to zero for unlimited.
 
-  /**
-   * @export
-   */
   EventEmitter.prototype.delimiter = '.';
 
-  /**
-   * @export
-   */
   EventEmitter.prototype.setMaxListeners = function(n) {
     if (n !== undefined) {
       this._events || init.call(this);
@@ -263,22 +242,13 @@
     }
   };
 
-  /**
-   * @export
-   */
   EventEmitter.prototype.event = '';
 
-  /**
-   * @export
-   */
   EventEmitter.prototype.once = function(event, fn) {
     this.many(event, 1, fn);
     return this;
   };
 
-  /**
-   * @export
-   */
   EventEmitter.prototype.many = function(event, ttl, fn) {
     var self = this;
 
@@ -300,10 +270,7 @@
     return self;
   };
 
-  /**
-   * @param {...} var_args description
-   */
-  EventEmitter.prototype.emit = function(var_args) {
+  EventEmitter.prototype.emit = function() {
 
     this._events || init.call(this);
 
@@ -403,14 +370,12 @@
       } else {
         throw new Error("Uncaught, unspecified 'error' event.");
       }
+      return false;
     }
 
     return !!this._all;
   };
 
-  /**
-   * @export
-   */
   EventEmitter.prototype.emitAsync = function() {
 
     this._events || init.call(this);
@@ -507,9 +472,6 @@
     return Promise.all(promises);
   };
 
-  /**
-   * @export
-   */
   EventEmitter.prototype.on = function(type, listener) {
     if (typeof type === 'function') {
       this.onAny(type);
@@ -557,9 +519,6 @@
     return this;
   };
 
-  /**
-   * @export
-   */
   EventEmitter.prototype.onAny = function(fn) {
     if (typeof fn !== 'function') {
       throw new Error('onAny only accepts instances of Function');
@@ -574,14 +533,8 @@
     return this;
   };
 
-  /**
-   * @export
-   */
   EventEmitter.prototype.addListener = EventEmitter.prototype.on;
 
-  /**
-   * @export
-   */
   EventEmitter.prototype.off = function(type, listener) {
     if (typeof listener !== 'function') {
       throw new Error('removeListener only takes instances of Function');
@@ -660,7 +613,7 @@
       }
       var keys = Object.keys(root);
       for (var i in keys) {
-        var key = keys[+i];
+        var key = keys[i];
         var obj = root[key];
         if ((obj instanceof Function) || (typeof obj !== "object") || (obj === null))
           continue;
@@ -677,9 +630,6 @@
     return this;
   };
 
-  /**
-   * @export
-   */
   EventEmitter.prototype.offAny = function(fn) {
     var i = 0, l = 0, fns;
     if (fn && this._all && this._all.length > 0) {
@@ -700,16 +650,8 @@
     return this;
   };
 
-  /**
-   * @export
-   */
   EventEmitter.prototype.removeListener = EventEmitter.prototype.off;
 
-  /**
-   * @export
-   *
-   * @param {string|!Array.<string>=} type
-   */
   EventEmitter.prototype.removeAllListeners = function(type) {
     if (arguments.length === 0) {
       !this._events || init.call(this);
@@ -731,9 +673,6 @@
     return this;
   };
 
-  /**
-   * @export
-   */
   EventEmitter.prototype.listeners = function(type) {
     if (this.wildcard) {
       var handlers = [];
@@ -751,16 +690,10 @@
     return this._events[type];
   };
 
-  /**
-   * @export
-   */
   EventEmitter.prototype.listenerCount = function(type) {
     return this.listeners(type).length;
   };
 
-  /**
-   * @export
-   */
   EventEmitter.prototype.listenersAny = function() {
 
     if(this._all) {
@@ -771,3 +704,17 @@
     }
 
   };
+
+  if (typeof define === 'function' && define.amd) {
+     // AMD. Register as an anonymous module.
+    define(function() {
+      return EventEmitter;
+    });
+  } else if (typeof exports === 'object') {
+    // CommonJS
+    module.exports = EventEmitter;
+  }
+  else {
+    // Browser global.
+    window.EventEmitter2 = EventEmitter;
+  }
